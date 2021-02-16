@@ -1,0 +1,9 @@
+.nav-responsiveness  {
+    background : 'green';
+    width : '30%';
+    height: '100vh';
+    position : 'fixed';
+    top: 0;
+    left : 0;
+    z-index : 1000
+}
