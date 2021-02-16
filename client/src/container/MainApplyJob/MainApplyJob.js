@@ -56,13 +56,13 @@ const MainApplyJob = props => {
       });
       setLoading(false)
     });
-  }, []);
+  }, [jobId]);
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
 
     const views= job.views + 1
-
+    
     const newObject = { views }
 
     axios.patch(`/jobs/${jobId}`, newObject)

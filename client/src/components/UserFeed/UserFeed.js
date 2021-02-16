@@ -64,7 +64,7 @@ useEffect(() => {
             setLoading(false)
           })
 
-  }, [])
+  }, [email])
 
   const postsList = posts.reverse()
 
@@ -141,7 +141,7 @@ useEffect(() => {
                         <img src={IconUs} alt="img"/>
                         <div className="usy-name">
                           <h3>{ post.author }</h3>
-                            <span><img src={IconClock} alt="img" />{post.date}</span>
+                            <span><img src={IconClock} alt="" />{post.date}</span>
                         </div>
                       </div>
                     <div className="ed-opts">
@@ -171,11 +171,11 @@ useEffect(() => {
                     <div className="epi-sec">
                       <ul className="descp">
                         <li>
-                          <img src={IconMeedia} alt="img" />
+                          <img src={IconMeedia} alt="" />
                           <span>243CongoNetwork</span>
                         </li>
                         <li>
-                          <img src={IconCountry} alt="img" />
+                          <img src={IconCountry} alt="" />
                           <span>{ post.country }</span>
                         </li>
                       </ul>
@@ -189,7 +189,7 @@ useEffect(() => {
                             post.postImage === "" ? null : 
                                       <img  
                                         src={`/${post.postImage}`} 
-                                        alt="post image" width="50%" 
+                                        alt="" width="50%" 
                                         height="20%" style={{ margin : 'auto', marginBottom : '8%'}}
                                       />
                         }
@@ -205,7 +205,7 @@ useEffect(() => {
                       <ul className="like-com">
                         <li>
                            <p><i className="fas fa-heart"></i> Like {post.likes}
-                            <img src={IconLike} alt="img" /> </p>
+                            <img src={IconLike} alt="" /> </p>
                         </li>
                         <li >
                             <p onClick={toggleShowComment}><i className="fas fa-comment-alt"></i> show Comment </p>

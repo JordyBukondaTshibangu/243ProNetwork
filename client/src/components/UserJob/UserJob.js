@@ -53,7 +53,7 @@ useEffect(() => {
             setLoading(false)
           })
 
-  }, [])
+  }, [email])
 
   let jobsList = jobs.reverse()
 

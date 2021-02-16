@@ -71,7 +71,7 @@ const MainAnyUser = props => {
                     setUserSkills(skills)
                     setUserPortfolio([ portfolio]) 
             })
-    },[])
+    },[ userId ])
     
     const showFeed = () => {
         setFeedToggle(true)

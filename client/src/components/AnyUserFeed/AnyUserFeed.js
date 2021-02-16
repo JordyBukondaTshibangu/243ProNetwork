@@ -53,7 +53,7 @@ const AnyUserFeed = (props) => {
             setLoading(false)
           })
 
-  }, [])
+  }, [email])
   if(loading){
     return <LoadingSpinner/>
   }else {
@@ -97,7 +97,7 @@ const AnyUserFeed = (props) => {
                             post.postImage === "" ? null : 
                                       <img  
                                         src={`/${post.postImage}`} 
-                                        alt="post image" width="50%" 
+                                        alt="" width="50%" 
                                         height="20%" style={{ margin : 'auto', marginBottom : '8%'}}
                                       />
                         }

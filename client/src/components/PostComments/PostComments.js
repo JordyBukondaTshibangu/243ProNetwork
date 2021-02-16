@@ -44,7 +44,7 @@ const  PostCommments = props => {
                   const newComments = res.data.comments
                   setComments(newComments)
              })
-  }, [])
+  }, [postId])
 
   
     

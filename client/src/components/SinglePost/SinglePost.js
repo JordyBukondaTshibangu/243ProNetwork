@@ -43,7 +43,7 @@ const  SinglePost = props => {
                     setUserpic(`/${companyImage}`)
               }
           })
-}, [])
+}, [email])
 
   const toggleShowComment = () => {
     setShowComment(!showComment)
@@ -93,7 +93,7 @@ const  SinglePost = props => {
             <div className="job_descp">
               <h3> {title} </h3>
               <p>{content}</p>
-              <img src={image} alt="image" width="100%" height="30%" style={{ margin : 'auto', marginBottom : '8%'}}/>
+              <img src={image} alt="/" width="100%" height="30%" style={{ margin : 'auto', marginBottom : '8%'}}/>
               <ul className="skill-tags">
                 <li><a href="/home" > HTML </a></li>
                 <li><a href="/home" > PHP </a></li>

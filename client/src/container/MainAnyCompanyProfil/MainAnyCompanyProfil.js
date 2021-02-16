@@ -62,7 +62,7 @@ const MainCompanyProfil = props => {
                 setCompanySkills(skills)
                   
             })
-    },[])
+    },[companyId, companyDetails, companyInfo])
     const showFeed = () => {
         setFeedToggle(true)
         setInfoToggle(false)

@@ -73,7 +73,7 @@ const MainCompanyProfil = () => {
                     setCompanyPortfolio([...companyPortfolio, portfolio]) 
                     setCompanySocialmedialink([...companySocialmedialink,socialmedialink])   
             })
-    },[])
+    },[companyId, companyPortfolio, companySocialmedialink])
 
     const showFeed = () => {
         setFeedToggle(true)

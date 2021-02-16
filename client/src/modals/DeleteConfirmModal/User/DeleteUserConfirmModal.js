@@ -19,7 +19,7 @@ const DeleteAccount = props => {
     const deleteAccount = async() => {
 
         try {
-            const res = await axios.delete(`/user/${userId}`)
+             await axios.delete(`/user/${userId}`)
             
                 setOnSuccess(true)
                 setTimeout(() => {

@@ -148,8 +148,8 @@ const JobContextProvider = (props) => {
             total_employee : job_total_employee
         }
             try{
-                const res = await axios.patch(`/jobs/${jobId}`, updatedJob)
-
+                await axios.patch(`/jobs/${jobId}`, updatedJob)
+                
                 setOnSuccess(true)
                 setTimeout(() => setOnSuccess(false), 15000)
 

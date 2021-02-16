@@ -54,7 +54,7 @@ const AnyCompanyFeed = (props) => {
             setLoading(false)
           })
 
-  }, [])
+  }, [email])
 
   if(loading){
     return <LoadingSpinner />
@@ -97,7 +97,7 @@ const AnyCompanyFeed = (props) => {
                             post.postImage === "" ? null : 
                                       <img  
                                         src={`/${post.postImage}`} 
-                                        alt="post image" width="50%" 
+                                        alt="" width="50%" 
                                         height="20%" style={{ margin : 'auto', marginBottom : '8%'}}
                                       />
                         }
@@ -113,7 +113,7 @@ const AnyCompanyFeed = (props) => {
                       <ul className="like-com">
                         <li>
                            <p><i className="fas fa-heart"></i> Like {post.likes}
-                            <img src={IconLike} alt="img" /> </p>
+                            <img src={IconLike} alt="" /> </p>
                         </li>
                         <li >
                             <p onClick={toggleShowComment}><i className="fas fa-comment-alt"></i> show Comment </p>

@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import HomeIcon from '../../images/icon1.png'
 import CompanyIcon from '../../images/icon2.png'

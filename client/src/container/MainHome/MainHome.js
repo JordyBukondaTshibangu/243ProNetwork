@@ -54,7 +54,7 @@ const Main = () => {
               setUserpic(`/${companyImage}`)
         }
           })
-}, [])
+}, [email])
 
   return (
     <main className="main-section">
