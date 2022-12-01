@@ -1,8 +1,8 @@
-const sgMail = require('@sendgrid/mail');
+import sgMail from "@sendgrid/mail";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const html  = (`
+const html = `
         <html>
               <head>
                 <title>WELCOME TO 2CONNECT</title>
@@ -35,28 +35,23 @@ const html  = (`
                   </div>
               </body>
           </html>
-`)
+`;
 
-const welcomeEmail = async (email ) => {
+export const welcomeEmail = async (email) => {
+  const msg = {
+    to: email,
+    from: "jordytshibss@gmail.com",
+    subject: "Welcome to the Congolese Professioanls Network",
+    text: "We hope you'll enjoy it right away ...",
+    html,
+  };
+  try {
+    await sgMail.send(msg);
+  } catch (error) {
+    console.error(error);
 
-    const msg = {
-        to: email,
-        from: 'jordytshibss@gmail.com',
-        subject: 'Welcome to the Congolese Professioanls Network',
-        text: 'We hope you\'ll enjoy it right away ...',
-        html
-      };
-        try {
-          await sgMail.send(msg);
-
-        } catch (error) {
-          console.error(error);
-       
-          if (error.response) {
-            console.error(error.response.body)
-          }
-        }
-}
-    exports.welcomeEmail = welcomeEmail
-
-    
+    if (error.response) {
+      console.error(error.response.body);
+    }
+  }
+};

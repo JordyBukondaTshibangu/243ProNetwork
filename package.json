@@ -2,6 +2,7 @@
   "name": "2connect",
   "version": "1.0.0",
   "description": "This is a social network app ",
+   "type" : "module",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
