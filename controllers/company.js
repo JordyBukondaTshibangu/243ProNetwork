@@ -2,7 +2,7 @@ import moment from "moment";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import { welcomeEmail } from "../middleware/emails/subscription.js";
-import { goodbye } from "../middleware/emails/unsubscription.js";
+// import { goodbye } from "../middleware/emails/unsubscription.js";
 import Company from "../models/company.js";
 import jwt from "jsonwebtoken";
 
@@ -29,12 +29,40 @@ export const getCompanies = async (req, res, next) => {
 };
 export const getCompanybyId = async (req, res, next) => {
   try {
-    const company = await Company.findById({ _id: req.params.companyId });
+    const companyFound = await Company.findById({ _id: req.params.companyId });
+    const {
+      company,
+      password,
+      country,
+      createdAt,
+      email,
+      phone,
+      address,
+      about,
+      skills,
+      portfolio,
+      socialmedialink,
+      total_number_employee,
+    } = companyFound;
+
+    let companyDetails = {
+      company,
+      country,
+      createdAt,
+      email,
+      phone,
+      address,
+      about,
+      skills,
+      portfolio,
+      socialmedialink,
+      total_number_employee,
+    };
 
     if (company) {
       res.status(200).json({
         message: "COMPANY SUCCESSFULLY FETCHED",
-        company,
+        companyDetails,
       });
     } else {
       res.status(404).json({
@@ -97,10 +125,22 @@ export const createCompany = async (req, res, next) => {
         password: hashedPassword,
       });
       const createdCompany = await newCompany.save();
-      welcomeEmail.welcomeEmail(createdCompany.email);
+      welcomeEmail(createdCompany.email);
+
+      const token = jwt.sign(
+        {
+          email,
+          id: _id,
+        },
+        "thisisasecretkey",
+        {
+          expiresIn: "5h",
+        }
+      );
       res.json({
         message: "COMPANY CREATED",
         createdCompany,
+        token,
         request: {
           type: "GET",
           url: `localhost:8080/company/${createdCompany._id}`,
@@ -117,35 +157,37 @@ export const createCompany = async (req, res, next) => {
 export const loginCompany = async (req, res, next) => {
   try {
     const company = await Company.find({ email: req.body.email });
-    let companyPassword = company[0].password;
-    if (company.length < 1) {
+
+    if (company.length === 0) {
       res.status(404).json({
-        message: " INVALID EMAIL OR PASSWORD ",
+        message: "INVALID EMAIL OR PASSWORD ",
+      });
+      return;
+    }
+    let companyPassword = company[0]?.password;
+
+    const result = await bcrypt.compare(req.body.password, companyPassword);
+
+    if (result) {
+      const token = jwt.sign(
+        {
+          email: req.body.email,
+          id: company._id,
+        },
+        "thisisasecretkey",
+        {
+          expiresIn: "5h",
+        }
+      );
+      res.status(200).json({
+        message: "SUCCESSFULLY LOGGED IN",
+        company,
+        token,
       });
     } else {
-      const result = await bcrypt.compare(req.body.password, companyPassword);
-
-      if (result) {
-        const token = jwt.sign(
-          {
-            email: company.email,
-            id: company._id,
-          },
-          "thisisasecretkey",
-          {
-            expiresIn: "5h",
-          }
-        );
-        res.status(200).json({
-          message: "SUCCESSFULLY LOGGED IN",
-          company,
-          token,
-        });
-      } else {
-        res.status(400).json({
-          message: "AUTHENTICATION FAILED !",
-        });
-      }
+      res.status(400).json({
+        message: "AUTHENTICATION FAILED !",
+      });
     }
   } catch (error) {
     res.status(500).json({

@@ -1,7 +1,6 @@
 import express from "express";
 import multer from "multer";
-
-const route = express.Router();
+import auth from "../middleware/auth.js";
 import {
   getUsers,
   getUser,
@@ -12,6 +11,8 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/user.js";
+
+const route = express.Router();
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -39,12 +40,17 @@ const upload = multer({
 });
 
 route.get("/", getUsers);
-route.get("/:userId", getUser);
+route.get("/:userId", auth, getUser);
 route.post("/signup", createUser);
 route.post("/login", loginUser);
 route.post("/login-social-account", loginSocialAccount);
-route.patch("/picture/:userId", upload.single("picture"), updateUserPicture);
-route.patch("/:userId", updateUser);
-route.delete("/:userId", deleteUser);
+route.patch(
+  "/picture/:userId",
+  auth,
+  upload.single("picture"),
+  updateUserPicture
+);
+route.patch("/:userId", auth, updateUser);
+route.delete("/:userId", auth, deleteUser);
 
 export default route;

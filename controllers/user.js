@@ -1,8 +1,9 @@
 import moment from "moment";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { welcomeEmail } from "../middleware/emails/subscription.js";
-import { goodbye } from "../middleware/emails/unsubscription.js";
+// import { goodbye } from "../middleware/emails/unsubscription.js";
 import User from "../models/user.js";
 
 export const getUsers = async (_, res, next) => {
@@ -103,10 +104,29 @@ export const createUser = async (req, res, next) => {
         password: hashedPassword,
       });
       const newUser = await user.save();
-      welcomeEmail.welcomeEmail(user.email);
+
+      // Generate token
+
+      const token = jwt.sign(
+        {
+          email: req.body.email,
+          id: req.body._id,
+        },
+        "thisisasecretkey",
+        {
+          expiresIn: 60 * 60,
+        }
+      );
+      res.status(200).json({
+        message: "SUCCESSFULLY SIGNU UP",
+        user,
+        token,
+      });
+      welcomeEmail(user.email);
       res.json({
         message: "USER CREATED",
         createduser: newUser,
+        token,
         request: {
           type: "GET",
           url: `localhost:8080/users/${newUser._id}`,
@@ -123,6 +143,13 @@ export const createUser = async (req, res, next) => {
 export const loginUser = async (req, res, next) => {
   try {
     const user = await User.find({ email: req.body.email });
+
+    if (user.length === 0) {
+      res.status(404).json({
+        message: "PPLEASE ENSURE YOU HAVE AN ACCOUNT",
+      });
+    }
+
     let userPassword = user[0].password;
     if (user.length < 1) {
       res.status(404).json({
@@ -131,9 +158,22 @@ export const loginUser = async (req, res, next) => {
     } else {
       const result = await bcrypt.compare(req.body.password, userPassword);
       if (result) {
+        // Generate token
+
+        const token = jwt.sign(
+          {
+            email: req.body.email,
+            id: req.body._id,
+          },
+          "thisisasecretkey",
+          {
+            expiresIn: 60 * 60,
+          }
+        );
         res.status(200).json({
           message: "SUCCESSFULLY LOGGED IN",
           user,
+          token,
         });
       } else {
         res.status(400).json({
@@ -172,9 +212,10 @@ export const updateUserPicture = async (req, res, next) => {
   const userId = req.params.userId;
 
   try {
+    console.log(req);
     const user = await User.updateOne(
       { _id: userId },
-      { picture: req.file.path }
+      { picture: req.route.path }
     );
     res.status(200).json({
       messgae: "USER  IMAGE SUCCESSFULLY UPDATED",
