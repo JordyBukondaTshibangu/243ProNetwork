@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Logo.css";
 import Logoimage from "../../images/c212.jpg";
 
 export default function Logo() {

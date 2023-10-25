@@ -1,5 +1,4 @@
 import React from 'react'
-import './UserAccount.css'
 import UserIcon from '../../images/resources/user.png'
 
 const  UserAccount = () => {

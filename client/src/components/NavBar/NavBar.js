@@ -10,7 +10,21 @@ import UserAccount from '../UserAccount/UserAccount'
 const  NavBar = ({ toggleNavbar}) => {
 
     const userInformation = localStorage.getItem('user')
-    const userDetails = JSON.parse(userInformation)
+    const userDetails = {
+    _id: "430943",
+    username: "John dow",
+    picture: "test",
+    country: "Congo",
+    age: 0,
+    name: "John",
+    gender: "Male",
+    company: "Fireworkx",
+    email: "john@dow.com",
+    phone: "0934090943",
+    address: "14 Bloemendal Mowbray",
+    about: "Lorem15",
+    registered: "13 October 2021",
+  }
 
     const { email} = userDetails
 

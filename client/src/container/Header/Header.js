@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './Header.css'
+
 import Logo from '../../components/Logo/Logo'
 import SearchBar from '../../components/SearchBar/SearchBar'
 import NavBar from '../../components/NavBar/NavBar'

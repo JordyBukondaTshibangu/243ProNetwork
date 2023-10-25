@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import "./MainHome.css";
 import axios from 'axios'
 import UserProfiction from "../../components/UserProfiction/UserProfiction";
 import AddPost from "../../modals/AddPostModal/AddPostModal"

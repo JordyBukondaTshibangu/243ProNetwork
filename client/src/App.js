@@ -20,38 +20,38 @@ import UsersPage from "./pages/UsersPage";
 import UserContextProvider from "./contexts/userContext";
 import JobContextProvider from "./contexts/jobContext";
 import PostContextProvider from "./contexts/postContext";
-import ProtectedRoute from "./ProtectedRoutes";
+
 import Unauthorized from "./Unauthorized";
 
 const App = () => {
   const [userDetails, setUserDetails] = useState({
-    _id: "",
-    username: "",
-    picture: "",
-    country: "",
+    _id: "430943",
+    username: "John dow",
+    picture: "test",
+    country: "Congo",
     age: 0,
-    name: "",
-    gender: "",
-    company: "",
-    email: "",
-    phone: "",
-    address: "",
-    about: "",
-    registered: "",
+    name: "John",
+    gender: "Male",
+    company: "Fireworkx",
+    email: "john@dow.com",
+    phone: "0934090943",
+    address: "14 Bloemendal Mowbray",
+    about: "Lorem15",
+    registered: "13 October 2021",
   });
   const [companyDetails, setCompanyDetails] = useState({
-    _id: "",
-    company_name: "",
-    password: "",
-    company_picture: "",
-    company_country: "",
-    createdAt: "",
-    company_email: "",
-    company_phone: "",
-    company_address: "",
-    company_about: "",
-    company_registered: "",
-    total_number_employee: 0,
+    _id: "89349843",
+    company_name: "Fireworkx",
+    password: "123455",
+    company_picture: "test",
+    company_country: "South Africa",
+    createdAt: "23 october 1999",
+    company_email: "fireworkxx@test.com",
+    company_phone: "0342904309",
+    company_address: "4 oakdale street Newland",
+    company_about: "Lorem20",
+    company_registered: "12 octobre 2000",
+    total_number_employee: 4,
   });
   const [isAuth, setAuth] = useState(false);
   const [onSuccess, setOnSuccess] = useState(false);
@@ -59,128 +59,64 @@ const App = () => {
   const [redirect, setRedirect] = useState(false);
 
   const signInUser = (email, password) => {
-    axios
-      .post("/user/login", { email, password })
-      .then((res) => {
-        setOnSuccess(true);
-        setTimeout(() => setOnFailure(false), 1000);
 
-        let user = res.data.user[0];
-        const {
-          _id,
-          username,
-          picture,
-          country,
-          age,
-          name,
-          gender,
-          company,
-          email,
-          phone,
-          address,
-          about,
-          registered,
-        } = user;
 
         setUserDetails((prevState) => {
           return {
             ...prevState,
-            _id,
-            username,
-            picture,
-            country,
-            age,
-            name,
-            gender,
-            company,
-            email,
-            phone,
-            address,
-            about,
-            registered,
+          _id: "430943",
+          username: "John dow",
+          picture: "test",
+          country: "Congo",
+          age: 0,
+          name: "John",
+          gender: "Male",
+          company: "Fireworkx",
+          email: "john@dow.com",
+          phone: "0934090943",
+          address: "14 Bloemendal Mowbray",
+          about: "Lorem15",
+          registered: "13 October 2021",
+  
           };
         });
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(userDetails));
         localStorage.setItem("auth", true);
         localStorage.setItem("company", JSON.stringify(companyDetails));
         setAuth(true);
-        setRedirect(true);
-        setTimeout(() => {
-          setRedirect(true);
-        }, 5000);
-      })
-      .catch((error) => {
-        setAuth(false);
-        setOnFailure(true);
-        setTimeout(() => setOnFailure(false), 15000);
-      });
+
+
   };
   const signInCompany = (email, password) => {
-    axios
-      .post("/company/login", { email, password })
-      .then((res) => {
-        setOnSuccess(true);
-        let existingCompany = res.data.company[0];
 
-        const {
-          _id,
-          company,
-          password,
-          picture,
-          country,
-          createdAt,
-          email,
-          phone,
-          address,
-          about,
-          registered,
-          total_number_employee,
-        } = existingCompany;
 
         setCompanyDetails((prevState) => {
           return {
             ...prevState,
-            company_id: _id,
-            password,
-            createdAt,
-            company_name: company,
-            company_picture: picture,
-            company_country: country,
-            company_email: email,
-            company_phone: phone,
-            company_address: address,
-            company_about: about,
-            total_number_employee: total_number_employee,
-            company_registered: registered,
+          _id: "89349843",
+          company_name: "Fireworkx",
+          password: "123455",
+          company_picture: "test",
+          company_country: "South Africa",
+          createdAt: "23 october 1999",
+          company_email: "fireworkxx@test.com",
+          company_phone: "0342904309",
+          company_address: "4 oakdale street Newland",
+          company_about: "Lorem20",
+          company_registered: "12 octobre 2000",
+          total_number_employee: 4,
+  
           };
         });
 
-        const companyLocalStorage = {
-          company_id: _id,
-          password,
-          createdAt,
-          company_name: company,
-          company_picture: picture,
-          company_country: country,
-          company_email: email,
-          company_phone: phone,
-          company_address: address,
-          company_about: about,
-          total_number_employee: total_number_employee,
-          company_registered: registered,
-        };
 
-        localStorage.setItem("company", JSON.stringify(companyLocalStorage));
+        localStorage.setItem("company", JSON.stringify(companyDetails));
         localStorage.setItem("auth", true);
         localStorage.setItem("user", JSON.stringify(userDetails));
 
         setAuth(true);
         setRedirect(true);
-      })
-      .catch((error) => {
-        setAuth(false);
-        setOnFailure(true);
-      });
+     
   };
   const signInWithGoogle = (email) => {
     axios
@@ -274,7 +210,7 @@ const App = () => {
                   />
                   {redirect ? <Redirect to="/home" /> : null}
 
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/home"
                     isAuth={isAuth}
@@ -282,7 +218,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={Home}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/companies"
                     isAuth={isAuth}
@@ -290,7 +226,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={CompaniesPage}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/company-profil"
                     isAuth={isAuth}
@@ -298,7 +234,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={CompanyProfilPage}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/companies/:companyId"
                     isAuth={isAuth}
@@ -306,7 +242,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={AnyCompanyProfilPage}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/users"
                     isAuth={isAuth}
@@ -314,7 +250,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={UsersPage}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/users/:userId"
                     isAuth={isAuth}
@@ -322,7 +258,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={AnyUserPage}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/jobs"
                     isAuth={isAuth}
@@ -330,7 +266,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={JobsPage}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/apply-job/:jobId"
                     isAuth={isAuth}
@@ -338,7 +274,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={ApplyJobPage}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/my-profile"
                     isAuth={isAuth}
@@ -346,7 +282,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={UserProfilPage}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/about"
                     isAuth={isAuth}
@@ -354,7 +290,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={AboutPage}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/privacy-policy"
                     isAuth={isAuth}
@@ -362,7 +298,7 @@ const App = () => {
                     companyDetails={companyDetails}
                     component={PrivacyPolicyPage}
                   />
-                  <ProtectedRoute
+                  <Route
                     exact
                     path="/community-guide-line"
                     isAuth={isAuth}
